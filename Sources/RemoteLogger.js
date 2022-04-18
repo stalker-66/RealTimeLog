@@ -17,30 +17,34 @@ function doGet(e)
   var userId = "Default"
   if (e.parameter["userId"] != null) {
     userId = e.parameter["userId"];
+    userId = Utilities.base64Decode( userId, Utilities.Charset.UTF_8 );
+    userId = Utilities.newBlob( userId ).getDataAsString();
   }
 
   // date
-  var today = new Date();
-  var date = today.toLocaleString();
+  var date = "--/--/-- --:--:--";
 
   // message
-  var typeId = 0;
+  var typeId = "0";
   var isSearch = 0;
   for (var j = 0; j < 10; j++) {
     if (e.parameter["p" + j] != null) {
+      e.parameter["p" + j] = Utilities.base64Decode( e.parameter["p" + j], Utilities.Charset.UTF_8 );
+      e.parameter["p" + j] = Utilities.newBlob( e.parameter["p" + j] ).getDataAsString()
       sheet.getRange("C"+n).setValue(e.parameter["p" + j]);
 
       if (e.parameter["t" + j] != null && e.parameter["t" + j] >=0 && e.parameter["t" + j] <= typeIdList.length-1) {
-        typeId = e.parameter["t" + j];
+        typeId = parseInt(e.parameter["t" + j]);
       }
 
-      sheet.getRange("D"+n).setValue(typeIdList[typeId]);
-      sheet.getRange("A"+n+":D"+n).setBackground(colorIdList[typeId]);
+      sheet.getRange("D"+n).setValue( typeIdList[typeId] );
+      sheet.getRange("A"+n+":D"+n).setBackground( colorIdList[typeId] );
 
       sheet.getRange("B"+n).setValue(userId);
 
       if (e.parameter["d" + j] != null) {
-        sheet.getRange("A"+n).setValue(e.parameter["d" + j]);
+        e.parameter["d" + j] = Utilities.base64Decode( e.parameter["d" + j], Utilities.Charset.UTF_8 );
+        sheet.getRange("A"+n).setValue( Utilities.newBlob( e.parameter["d" + j] ).getDataAsString() );
       } else {
         sheet.getRange("A"+n).setValue(date);
       }

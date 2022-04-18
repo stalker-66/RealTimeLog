@@ -5,6 +5,9 @@ local pluginName = "realtimelog"
 local public = require "CoronaLibrary":new{ name=pluginName, publisherId=publisherId }
 
 -- add modules/optimization
+local mime = require "mime"
+local mime_b64 = mime.b64
+local mime_unb64 = mime.unb64
 local json = require "json"
 local json_prettify = json.prettify
 local json_decode = json.decode
@@ -51,14 +54,21 @@ private.print = function(...)
 				private.list[#private.list] = private.list[#private.list]..' '..tostring(v)
 			end
 		end
-	else
-		private.list[#private.list+1] = ...
-	end
 
-	private.list[#private.list] = "@date="..date.."@"..private.list[#private.list]
+		local str = private.list[#private.list]
+		if not private.debug then
+			if string_find(str, "@type=") then
+				local msgType = string_match(str,"@type=(%w+)@")
+				str = string_gsub(str,"@type="..msgType.."@","")
+			end
+		end
+		_print( str )
 
-	if private.offlineLog then
-		private.save()
+		private.list[#private.list] = "@date="..date.."@"..private.list[#private.list]
+
+		if private.offlineLog then
+			private.save()
+		end
 	end
 end
 
@@ -87,21 +97,21 @@ private.update = function()
 				end
 
 				if i==1 then
-					message = "?p"..index.."="..msg
+					message = "?p"..index.."="..mime_b64(msg)
 				else
-					message = message.."&p"..index.."="..msg
+					message = message.."&p"..index.."="..mime_b64(msg)
 				end
 
 				msgType = private.typeList[msgType] and private.typeList[msgType] or 0
 				message = message.."&t"..index.."="..msgType
 
-				message = message.."&d"..index.."="..date
+				message = message.."&d"..index.."="..mime_b64(date)
 
 				index = index+1
 			end
 		end
 
-		local url = private.url..message.."&userId="..private.userId
+		local url = private.url..message.."&userId="..mime_b64(private.userId)
 		network.request( url, "GET", function(e)
 			if e.isError or e.status~=200 then
 				if private.debug then
