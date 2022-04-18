@@ -35,4 +35,45 @@ For the backend, you will need a Google account because we will be creating a Sp
       ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/6.png?raw=true)
 
       </details>
-  7.	Save the project. Now we need to publish it.
+ 7. Save the project. Now we need to publish it.
+      <details>
+      <summary>See more</summary>
+
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/7.png?raw=true)
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/8.png?raw=true)
+
+      </details>
+8. Select Settings > Web app. You must specify the parameters:
+      * **Execute as:** Me
+      * **Who has access:** Anyone
+
+      Click "Deploy".
+      
+      <details>
+      <summary>See more</summary>
+
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/9.png?raw=true)
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/10.png?raw=true)
+
+      </details>
+9. Click "Authorize access" and select Google account.
+
+      > If you see a warning: "Google hasn't verified this app", you must click "Show Advanced" and "Go to RemoteLogger (unsafe)"
+      
+      Click "Allow".
+      <details>
+      <summary>See more</summary>
+
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/11.png?raw=true)
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/12.png?raw=true)
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/13.png?raw=true)
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/14.png?raw=true)
+
+      </details>
+10. Get your Deployment ID and click "Done".
+      <details>
+      <summary>See more</summary>
+
+      ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/15.png?raw=true)
+
+      </details>
