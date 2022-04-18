@@ -1,9 +1,8 @@
 # How to get Deployment ID
 For the backend, you will need a Google account because we will be creating a Spreadsheet via Google Drive.
 ## Backend setup
-1. Sign in to your Google account.
-2. Follow the link - [ExampleSpreadsheet.](https://docs.google.com/spreadsheets/d/14cy6SPEx61rtszgGKNYLHsnulwta8khzsiNDOIPnHsU/edit?usp=sharing)
-3. You see an example of a Google Spreadsheet for a future log. Copy this example to your Google Drive and rename.
+1. Sign in to your Google account and follow the link - [ExampleSpreadsheet](https://docs.google.com/spreadsheets/d/14cy6SPEx61rtszgGKNYLHsnulwta8khzsiNDOIPnHsU/edit?usp=sharing).
+2. Copy this example to your Google Drive and rename. Select ***"File > Make a copy"*** edit the name and click ***"Make a copy"***.
       <details>
       <summary>See more</summary>
 
@@ -12,22 +11,22 @@ For the backend, you will need a Google account because we will be creating a Sp
 
       </details>
       
-     **Messages from the device will be sent to this Spreadsheet.**
-4. Copy the Spreadsheet ID from url.
+     > Messages from the device will be sent to this Spreadsheet
+3. Copy the **Spreadsheet ID** from url.
       <details>
       <summary>See more</summary>
 
       ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/3.png?raw=true)
 
       </details>
- 5. Go to the tab "Extensions" and select "Apps Script".
+ 4. Go to the tab ***"Extensions"*** and select ***"Apps Script"***.
       <details>
       <summary>See more</summary>
 
       ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/4.png?raw=true)
 
       </details>
- 6. You need to replace "id_spreadsheet" with your Spreadsheet ID.
+ 5. Replace **id_spreadsheet** with your **Spreadsheet ID**.
       <details>
       <summary>See more</summary>
 
@@ -35,7 +34,7 @@ For the backend, you will need a Google account because we will be creating a Sp
       ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/6.png?raw=true)
 
       </details>
- 7. Save the project. Now we need to publish it.
+ 6. Save the project. Now we need to publish it. Click ***"Deploy > Manage deployments > Create deployment"***.
       <details>
       <summary>See more</summary>
 
@@ -43,11 +42,12 @@ For the backend, you will need a Google account because we will be creating a Sp
       ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/8.png?raw=true)
 
       </details>
-8. Select Settings > Web app. You must specify the parameters:
-      * **Execute as:** Me
-      * **Who has access:** Anyone
+7. Select ***"Settings > Web app"***. You must specify the parameters:
+      > **Execute as:** Me
+      > 
+      > **Who has access:** Anyone
 
-      Click "Deploy".
+      Click ***"Deploy"***.
       
       <details>
       <summary>See more</summary>
@@ -56,11 +56,11 @@ For the backend, you will need a Google account because we will be creating a Sp
       ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/10.png?raw=true)
 
       </details>
-9. Click "Authorize access" and select Google account.
+8. Click ***"Authorize access"*** and select you Google account.
 
-      > If you see a warning: "Google hasn't verified this app", you must click "Show Advanced" and "Go to RemoteLogger (unsafe)"
+      > If you see a warning: **"Google hasn't verified this app"**, you must open ***"Show Advanced"*** and ***"Go to RemoteLogger (unsafe)"***
       
-      Click "Allow".
+      Click ***"Allow"***.
       <details>
       <summary>See more</summary>
 
@@ -70,7 +70,7 @@ For the backend, you will need a Google account because we will be creating a Sp
       ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/14.png?raw=true)
 
       </details>
-10. Get your Deployment ID and click "Done".
+9. Get your **Deployment ID** and click ***"Done"***.
       <details>
       <summary>See more</summary>
 
