@@ -117,6 +117,7 @@ private.update = function()
 		end
 
 		local url = private.url..message.."&userId="..mime_b64(private.userId).."&platform="..mime_b64(private.platform)
+		url = string_gsub(url,"+", "%%2B")
 		if private.debug then
 			_print( "RealTimeLog: Send Message:", url )
 		end
