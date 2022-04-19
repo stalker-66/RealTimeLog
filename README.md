@@ -83,7 +83,7 @@ local realtimelog = require "plugin.realtimelog"
 > * **Warning** - message on a yellow background.
 > * **Error** - message on a red background.
 > 
-> To specify the message type you need to use the `"@type=YOU_TYPE@"` modifier. Where **YOU_TYPE** is the name of the message type.
+> To specify the message type you need to use the `"@type=YOU_TYPE@"` modifier. Where **YOU_TYPE** is the name of the message type.  <br/>
 > `Example:` <br/>
 > ```lua
 > print( "@type=Info@My message about Info" )
@@ -92,9 +92,9 @@ local realtimelog = require "plugin.realtimelog"
 > ```
 > `Output:` <br/>
 > **Corona Simulator Console:** <br/>
+> ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/765803458b09547daceb45a6a604536e399687e3/Docs/res/18.png?raw=true)
 > **You Spreadsheet:** <br/>
-
-
+> ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/765803458b09547daceb45a6a604536e399687e3/Docs/res/19.png?raw=true)
 ## Extras
 > The ***print*** function now supports output lua tables. <br/>
 > `Example:` <br/>
