@@ -83,7 +83,7 @@ local realtimelog = require "plugin.realtimelog"
 > * **Warning** - message on a yellow background.
 > * **Error** - message on a red background.
 > 
-> To specify the message type you need to use the `"@type=YOU_TYPE@"` modifier. Where **YOU_TYPE** is the name of the message type.
+> To specify the message type you need to use the `"@type=YOU_TYPE@"` modifier. Where **YOU_TYPE** is the name of the message type.  <br/>
 > `Example:` <br/>
 > ```lua
 > print( "@type=Info@My message about Info" )
