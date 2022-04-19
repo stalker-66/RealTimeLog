@@ -56,7 +56,61 @@ local realtimelog = require "plugin.realtimelog"
 > `Boolean`. Saving the log to a file. If the app was closed before all logs were sent, a next launch of the app will resume sending old logs. Default is `false`. <br/>
 > * **debug** (optional) <br/>
 > `Boolean`. Includes additional debugging information for the plugin. Default is `false`. <br/>
-## Additionally
+
+> Calling this function clears the log.
+> ```lua
+> realtimelog.clear()
+> ```
+
+> Plugin stop. After calling this function, initialization is required to work with the plugin.
+> ```lua
+> realtimelog.stop()
+> ```
+## Extras
+> The ***print*** function now supports output lua tables. <br/>
+> `Example:` <br/>
+> ```lua
+> local items = {
+> 	{ id = "orange", count = 2, quality = "legend" },
+> 	{ id = "banana", count = 8, quality = "legend" },
+> 	{ id = "coconut", count = 14, quality = "legend" },
+> }
+> print( items )
+> ```
+> `Output:` <br/>
+> ```json
+>   [{
+>     "id":"orange",
+>     "count":2,
+>     "quality":"legend"
+>   },{
+>     "id":"banana",
+>     "count":8,
+>     "quality":"legend"
+>   },{
+>     "id":"coconut",
+>     "count":14,
+>     "quality":"legend"
+>   }]
+> ```
+
+> You can generate a **unique id** from your ***mask***. Plugin initialization is optional.
+> ```lua
+> local uniqueId = realtimelog.getUnic(mask)
+> ```
+> * **mask** (optional) <br/>
+> `String`. The mask by which a unique identifier will be generated. Default is `"xxxx-xxxx-xxxx"`. <br/>
+> 
+> `Example:` <br/>
+> ```lua
+> local uniqueId = realtimelog.getUnic("xx-xx-xxxxxx-xx-xx")
+> print( uniqueId )
+> ```
+> `Output:` <br/>
+> ```lua
+>   "b8-40-1522f7-10-06"
+> ```
+## Usage
 ## Example
 See more - [Solar2dExample](https://github.com/stalker-66/RealTimeLog/tree/main/Solar2dExample)
 ## Support
