@@ -5,7 +5,7 @@ function doGet(e)
 
   // clear
   if (e.parameter["isClear"] != null && e.parameter["isClear"] == 1) {
-    sheet.getRange("A2"+":D"+n).setBackground("#ffffff").clearContent();
+    sheet.getRange("A2"+":E"+n).setBackground("#ffffff").clearContent();
     return ContentService.createTextOutput("Clear Log: Success");
   }
 
@@ -19,6 +19,14 @@ function doGet(e)
     userId = e.parameter["userId"];
     userId = Utilities.base64Decode( userId, Utilities.Charset.UTF_8 );
     userId = Utilities.newBlob( userId ).getDataAsString();
+  }
+
+  // platform
+  var platform = "Default"
+  if (e.parameter["platform"] != null) {
+    platform = e.parameter["platform"];
+    platform = Utilities.base64Decode( platform, Utilities.Charset.UTF_8 );
+    platform = Utilities.newBlob( platform ).getDataAsString();
   }
 
   // date
@@ -38,7 +46,7 @@ function doGet(e)
       }
 
       sheet.getRange("D"+n).setValue( typeIdList[typeId] );
-      sheet.getRange("A"+n+":D"+n).setBackground( colorIdList[typeId] );
+      sheet.getRange("A"+n+":E"+n).setBackground( colorIdList[typeId] );
 
       sheet.getRange("B"+n).setValue(userId);
 
@@ -48,6 +56,8 @@ function doGet(e)
       } else {
         sheet.getRange("A"+n).setValue(date);
       }
+
+      sheet.getRange("E"+n).setValue(platform);
 
       isSearch = 1;
       n++;

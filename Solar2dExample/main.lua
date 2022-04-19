@@ -4,10 +4,10 @@
 local realtimelog = require "plugin.realtimelog"
 
 realtimelog.init({
-	deploymentID = "AKfycbzpxlOx_mpQaNNjuWJqe4mzh4JtXwoOqQPEImd1GFKy-4ZLLlSjq7ymFbJFR-bGqBGB",
+	deploymentID = "AKfycbzwQeKLYu_-LMQ5n8kZvZkgpww7C20pJDJDmPVkVfRyb2RZ8JASRBjjzZksI5GGe536-Q",
 	clearOldSession = true,
 	offlineLog = false,
-	debug = true,
+	debug = false,
 })
 
 -- buttons --

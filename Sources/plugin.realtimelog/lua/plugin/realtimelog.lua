@@ -111,7 +111,7 @@ private.update = function()
 			end
 		end
 
-		local url = private.url..message.."&userId="..mime_b64(private.userId)
+		local url = private.url..message.."&userId="..mime_b64(private.userId).."&platform="..mime_b64(private.platform)
 		network.request( url, "GET", function(e)
 			if e.isError or e.status~=200 then
 				if private.debug then
@@ -184,6 +184,7 @@ public.init = function(p)
 	private.userId = p.userID
 	private.debug = p.debug
 	private.offlineLog = p.offlineLog
+	private.platform = system.getInfo("platform").." "..system.getInfo("platformVersion")
 	private.init = true
 
 	if p.clearOldSession then
@@ -201,7 +202,7 @@ public.init = function(p)
 	end
 
 	local unic = public.getUnic()
-	print("@type=NewSession@RealTimeLog: New session: "..unic)
+	print("@type=NewSession@RealTimeLog: New session: "..unic..".\nPlatform: "..private.platform..".\nUserId: "..private.userId..".")
 
 	return true
 end
@@ -237,6 +238,7 @@ public.stop = function()
 	private.userId = nil
 	private.debug = nil
 	private.offlineLog = nil
+	private.platform = nil
 	private.list = {}
 end
 
