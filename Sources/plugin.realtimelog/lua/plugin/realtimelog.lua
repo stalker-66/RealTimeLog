@@ -16,6 +16,7 @@ local table_remove = table.remove
 local string_find = string.find
 local string_match = string.match
 local string_gsub = string.gsub
+local string_len = string.len
 local string_format = string.format
 local math_random = math.random
 local os_time = os.time
@@ -64,7 +65,11 @@ private.print = function(...)
 		end
 		_print( str )
 
-		private.list[#private.list] = "@date="..date.."@"..private.list[#private.list]
+		if string_len(str)==0 then
+			private.list[#private.list] = nil
+		else
+			private.list[#private.list] = "@date="..date.."@"..private.list[#private.list]
+		end
 
 		if private.offlineLog then
 			private.save()
@@ -112,6 +117,9 @@ private.update = function()
 		end
 
 		local url = private.url..message.."&userId="..mime_b64(private.userId).."&platform="..mime_b64(private.platform)
+		if private.debug then
+			_print( "RealTimeLog: Send Message:", url )
+		end
 		network.request( url, "GET", function(e)
 			if e.isError or e.status~=200 then
 				if private.debug then
