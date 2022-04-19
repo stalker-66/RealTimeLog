@@ -67,6 +67,16 @@ local realtimelog = require "plugin.realtimelog"
 > realtimelog.stop()
 > ```
 ## Usage
+The **realtimelog** plugin modifies the standard ***print*** function. You must use ***print*** in your application. The printout will be sent to the ***console*** and your ***Spreadsheet***. <br/>
+`Example:` <br/>
+```lua
+print( "My Test Print" )
+```
+`Output:` <br/>
+**Corona Simulator Console:** <br/>
+![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/16.png?raw=true)
+**You Spreadsheet:** <br/>
+![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/17.png?raw=true)
 ## Extras
 > The ***print*** function now supports output lua tables. <br/>
 > `Example:` <br/>
