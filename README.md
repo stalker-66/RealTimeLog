@@ -67,16 +67,34 @@ local realtimelog = require "plugin.realtimelog"
 > realtimelog.stop()
 > ```
 ## Usage
-The **realtimelog** plugin modifies the standard ***print*** function. You must use ***print*** in your application. The printout will be sent to the ***console*** and your ***Spreadsheet***. <br/>
-`Example:` <br/>
-```lua
-print( "My Test Print" )
-```
-`Output:` <br/>
-**Corona Simulator Console:** <br/>
-![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/16.png?raw=true)
-**You Spreadsheet:** <br/>
-![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/f1f8cbed86b519e3d7dd067033dc00cdc20dbdeb/Docs/res/17.png?raw=true)
+> The **realtimelog** plugin modifies the standard ***print*** function. You must use ***print*** in your app. The printout will be sent to the ***console*** and your ***Spreadsheet***. <br/>
+> `Example:` <br/>
+> ```lua
+> print( "My Test Print" )
+> ```
+> `Output:` <br/>
+> **Corona Simulator Console:** <br/>
+> ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/20b18143cffcd82e2599e3c6f2ad99c2998b466d/Docs/res/16.png?raw=true)
+> **You Spreadsheet:** <br/>
+> ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/20b18143cffcd82e2599e3c6f2ad99c2998b466d/Docs/res/17.png?raw=true)
+
+> The **realtimelog** plugin supports **3 types of messages**:
+> * **Info** - standard message on a white background. Default for `all messages`.
+> * **Warning** - message on a yellow background.
+> * **Error** - message on a red background.
+> 
+> To specify the message type you need to use the `"@type=YOU_TYPE@"` modifier. Where **YOU_TYPE** is the name of the message type.
+> `Example:` <br/>
+> ```lua
+> print( "@type=Info@My message about Info" )
+> print( "@type=Warning@My message about Warning" )
+> print( "@type=Error@My message about Error" )
+> ```
+> `Output:` <br/>
+> **Corona Simulator Console:** <br/>
+> **You Spreadsheet:** <br/>
+
+
 ## Extras
 > The ***print*** function now supports output lua tables. <br/>
 > `Example:` <br/>
