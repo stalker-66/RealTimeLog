@@ -27,7 +27,7 @@ settings =
 	},
 
 	plugins = {
-		["plugin.realtimelog"] 				= get_narkoz_plugin("realtimelog"),
+		["plugin.realtimelog"] 	= get_narkoz_plugin("realtimelog"),
 	},
 }
 ```
@@ -66,6 +66,7 @@ local realtimelog = require "plugin.realtimelog"
 > ```lua
 > realtimelog.stop()
 > ```
+## Usage
 ## Extras
 > The ***print*** function now supports output lua tables. <br/>
 > `Example:` <br/>
@@ -110,7 +111,6 @@ local realtimelog = require "plugin.realtimelog"
 > ```lua
 >   "b8-40-1522f7-10-06"
 > ```
-## Usage
 ## Example
 See more - [Solar2dExample](https://github.com/stalker-66/RealTimeLog/tree/main/Solar2dExample)
 ## Support
