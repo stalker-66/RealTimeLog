@@ -122,9 +122,9 @@ private.update = function()
 			_print( "RealTimeLog: Send Message:", url )
 		end
 		network.request( url, "GET", function(e)
-			if e.isError or e.status~=200 then
+			if e.isError then
 				if private.debug then
-					_print( "RealTimeLog: Log sending error. There is no internet connection or the server is unavailable." )
+					_print( "RealTimeLog: Log sending error. There is no internet connection or the server is unavailable.", json_prettify(e) )
 				end
 			else
 				for i=index,1,-1 do
