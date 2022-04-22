@@ -4,18 +4,6 @@ The "RealTimeLog" plugin allows you to remotely debug an application built on th
 ## Project Settings
 To use this plugin, add an entry into the plugins table of ***build.settings***.
 ```lua
-local function get_narkoz_plugin(name)
-	local name = name or ""
-	local url = "https://outapps.info/codework/get_plug_solar2d.php"
-	local plugin = {publisherId = 'com.narkoz',supportedPlatforms = {}}
-	local platforms = {"android","iphone","iphone-sim","win32-sim","mac-sim","appletvos","appletvsimulator"}
-	for i=1,#platforms do
-		local p = platforms[i]
-		plugin.supportedPlatforms[p] = {url = url.."?name="..name.."&platform="..p}
-	end
-
-	return plugin
-end
 
 settings = 
 {
@@ -29,7 +17,7 @@ settings =
 	},
 
 	plugins = {
-		["plugin.realtimelog"] 	= get_narkoz_plugin("realtimelog"),
+		["plugin.realtimelog"] 	= {publisherId = 'com.narkoz'},
 	},
 }
 ```
