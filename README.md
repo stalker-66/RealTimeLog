@@ -17,7 +17,7 @@ settings =
 	},
 
 	plugins = {
-		["plugin.realtimelog"] 	= { publisherId = "com.narkoz" },
+		["plugin.realtimelog"] = { publisherId = "com.narkoz" },
 	},
 }
 ```
