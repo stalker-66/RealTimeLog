@@ -37,7 +37,7 @@ local realtimelog = require "plugin.realtimelog"
 > * **deploymentID** (required) <br/>
 > `String`. Your Deployment ID. See more - [How to get Deployment ID](https://github.com/stalker-66/RealTimeLog/blob/87fbaddbe90e5688e710bcd2040e7bfd80627f17/Docs/How%20to%20get%20Deployment%20ID.md). <br/>
 > * **userID** (optional) <br/>
-> `String`. User ID for logging. Default is `Device ID` - ***system.getInfo( "deviceID" )*** [Solar2D API](https://docs.coronalabs.com/api/library/system/getInfo.html). <br/>
+> `String`. User ID for logging. Default is `Device ID` - ***system.getInfo( "deviceID" )*** - [Solar2D API](https://docs.coronalabs.com/api/library/system/getInfo.html). <br/>
 > * **timeUpdate** (optional) <br/>
 > `Number`. The delay in updating the log by the plugin in milliseconds. Default is `250` ms. <br/>
 > * **clearOldSession** (optional) <br/>
