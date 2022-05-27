@@ -4,11 +4,27 @@
 local realtimelog = require "plugin.realtimelog"
 
 realtimelog.init({
-	deploymentID = "AKfycbxvaeVUwx42tbifjhS_MzKhrcqIL8BXOZ_lAjQDxRsgUQq6oMcIFEFtizPTgomMOpRPvA",
+	deploymentID = "AKfycbzANJkZPtiWyHem-iBZ7N5-JAVmahEt5IHE_-le_0PfTFHM6enCHVt-IYE4sCrzs0yqwQ",
 	clearOldSession = true,
 	offlineLog = false,
 	debug = true,
 })
+
+-- title --
+local title = display.newText{
+	text = "Real Time Log Plugin",
+	fontSize = display.contentHeight*.05
+}
+title.x = display.contentWidth*.5
+title.y = display.contentHeight*.18
+
+local auth = display.newText{
+	text = "by narkoz",
+	fontSize = display.contentHeight*.025
+}
+auth.x = title.x+title.width*.5-auth.width*.5
+auth.y = title.y+title.height*.5+auth.height*.5
+auth:setFillColor(1,0,0)
 
 -- buttons --
 local widget = require  "widget"
@@ -31,7 +47,7 @@ local clear = widget.newButton(
 	}
 )
 clear.x = display.contentWidth*.5
-clear.y = display.contentHeight*.5
+clear.y = display.contentHeight*.5-clear.height*.5
 
 local send_info = widget.newButton(
 	{

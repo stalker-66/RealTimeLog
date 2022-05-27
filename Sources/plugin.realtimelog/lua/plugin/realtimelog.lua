@@ -21,6 +21,7 @@ local string_format = string.format
 local math_random = math.random
 local os_time = os.time
 local os_date = os.date
+local _print = print
 
 -- private
 local private = {
@@ -34,48 +35,6 @@ local private = {
 		["NewSession"] = 3,
 	}
 }
-
-local _print = print
-private.print = function(...)
-	if not private.init then return false end
-
-	local args = {...}
-	local date = os_date("%x").." "..os_date("%X")
-
-	if #args>0 then
-		private.list[#private.list+1] = ""
-		for i=1,#args do
-			local v = args[i]
-			if type(v)=="table" then
-				v = json_prettify(v)
-			end
-			if i==1 then
-				private.list[#private.list] = tostring(v)
-			else
-				private.list[#private.list] = private.list[#private.list]..' '..tostring(v)
-			end
-		end
-
-		local str = private.list[#private.list]
-		if not private.debug then
-			if string_find(str, "@type=") then
-				local msgType = string_match(str,"@type=(%w+)@")
-				str = string_gsub(str,"@type="..msgType.."@","")
-			end
-		end
-		_print( str )
-
-		if string_len(str)==0 then
-			private.list[#private.list] = nil
-		else
-			private.list[#private.list] = "@date="..date.."@"..private.list[#private.list]
-		end
-
-		if private.offlineLog then
-			private.save()
-		end
-	end
-end
 
 private.update = function()
 	if not private.init then return false end
@@ -122,6 +81,9 @@ private.update = function()
 			_print( "RealTimeLog: Send Message:", url )
 		end
 		network.request( url, "GET", function(e)
+			-- if private.debug then
+			-- 	_print( "RealTimeLog: Response - ", json_prettify(e) )
+			-- end
 			if e.isError then
 				if private.debug then
 					_print( "RealTimeLog: Log sending error. There is no internet connection or the server is unavailable.", json_prettify(e) )
@@ -170,6 +132,25 @@ private.load = function()
 	end
 end
 
+private.parsePrint = function(...)
+	local str = ""
+	local args = {...}
+	if #args>0 then
+		for i=1,#args do
+			local v = args[i]
+			if type(v)=="table" then
+				v = json_prettify(v)
+			end
+			if i==1 then
+				str = tostring(v)
+			else
+				str = str..' '..tostring(v)
+			end
+		end
+	end
+	return str
+end
+
 -- public
 public.init = function(p)
 	if private.init then return false end
@@ -186,8 +167,7 @@ public.init = function(p)
 	p.clearOldSession = p.clearOldSession
 	p.offlineLog = p.offlineLog
 	p.debug = p.debug
-	
-	print = private.print
+
 	private.time = timer.performWithDelay( p.timeUpdate, private.update, 0 )
 	private.url = "https://script.google.com/macros/s/"..p.deploymentID.."/exec"
 	private.userId = p.userID
@@ -200,6 +180,39 @@ public.init = function(p)
 		public.clear()
 	else
 		private.update()
+	end
+
+	-- global --
+	_G.printEvents = _G.printEvents or {}
+	_G.printEvents[#_G.printEvents+1] = function(str)
+		if not private.init then return false end
+
+		if string_len(str)>0 then
+			local date = os_date("%x").." "..os_date("%X")
+			private.list[#private.list+1] = "@date="..date.."@"..str
+		end
+
+		if private.offlineLog then
+			private.save()
+		end
+
+		if not private.debug then
+			if string_find(str, "@type=") then
+				local msgType = string_match(str,"@type=(%w+)@")
+				return string_gsub(str,"@type="..msgType.."@","")
+			end
+		end
+	end
+	if _G.narkozPrint~=true then
+		_G.narkozPrint = true
+		print = function(...)
+			local str = private.parsePrint(...)
+			for i=1,#_G.printEvents do
+				local res = _G.printEvents[i](str)
+				str = res and res or str
+			end
+			_print(str)
+		end
 	end
 
 	if private.debug then
@@ -222,6 +235,9 @@ public.clear = function()
 	private.order = false
 	private.list = {}
 	network.request( private.url.."?isClear=1", "GET", function(e)
+		-- if private.debug then
+		-- 	_print( "RealTimeLog: Response - ", json_prettify(e) )
+		-- end
 		if e.isError or e.status~=200 then
 			if private.debug then
 				_print( "RealTimeLog: Log cleanup error. There is no internet connection or the server is unavailable." )

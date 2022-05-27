@@ -9,9 +9,7 @@ settings =
 		},
 	},
 
-	plugins = {
-		-- implementation
-		-- ["plugin.realtimelog"] = { publisherId = "com.narkoz" },
-		-- implementation
-	},
+	-- plugins = {
+	-- 	["plugin.realtimelog"] = { publisherId = "com.narkoz" },
+	-- },
 }

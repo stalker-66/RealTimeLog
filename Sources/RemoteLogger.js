@@ -1,42 +1,60 @@
+function clearLog()
+{
+  // select sheet
+  let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Log');
+  let rows = sheet.getDataRange();
+  let numRows = rows.getNumRows();
+
+  for (let i = numRows; i >= 3; i--) {
+    sheet.deleteRow(i);
+  }
+  sheet.getRange("A2"+":E2").setBackground("#ffffff").clearContent();
+}
+
 function doGet(e)
 {
-  var sheet = SpreadsheetApp.openById("id_spreadsheet");
-  var n = sheet.getLastRow() + 1;
+  let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Log');
+  let n = sheet.getLastRow() + 1;
 
   // clear
-  if (e.parameter["isClear"] != null && e.parameter["isClear"] == 1) {
-    sheet.getRange("A2"+":E"+n).setBackground("#ffffff").clearContent();
-    return ContentService.createTextOutput("Clear Log: Success");
+  if ( e != null && e.parameter != null && e.parameter["isClear"] != null && e.parameter["isClear"] == 1 ) {
+    clearLog();
+
+    // response
+    let resp = {};
+    resp.success = 1;
+
+    return ContentService.createTextOutput(JSON.stringify(resp));
   }
 
   // types
-  var typeIdList = ["Info","Warning","Error","New Session"];
-  var colorIdList = ["#ffffff","#ffe599","#ea9999","#b6d7a8"];
+  let typeIdList = ["Info","Warning","Error","New Session"];
+  let colorIdList = ["#ffffff","#ffe599","#ea9999","#b6d7a8"];
 
   // user id
-  var userId = "Default"
-  if (e.parameter["userId"] != null) {
+  let userId = "Default"
+  if ( e != null && e.parameter != null && e.parameter["userId"] != null ) {
     userId = e.parameter["userId"];
     userId = Utilities.base64Decode( userId, Utilities.Charset.UTF_8 );
     userId = Utilities.newBlob( userId ).getDataAsString();
   }
 
   // platform
-  var platform = "Default"
-  if (e.parameter["platform"] != null) {
+  let platform = "Default"
+  if ( e != null && e.parameter != null && e.parameter["platform"] != null ) {
     platform = e.parameter["platform"];
     platform = Utilities.base64Decode( platform, Utilities.Charset.UTF_8 );
     platform = Utilities.newBlob( platform ).getDataAsString();
   }
 
   // date
-  var date = "--/--/-- --:--:--";
+  let date = "--/--/-- --:--:--";
 
   // message
-  var typeId = "0";
-  var isSearch = 0;
-  for (var j = 0; j < 10; j++) {
-    if (e.parameter["p" + j] != null) {
+  let typeId = "0";
+  let isSearch = 0;
+  for (let j = 0; j < 10; j++) {
+    if ( e != null && e.parameter != null && e.parameter["p" + j] != null ) {
       e.parameter["p" + j] = Utilities.base64Decode( e.parameter["p" + j], Utilities.Charset.UTF_8 );
       e.parameter["p" + j] = Utilities.newBlob( e.parameter["p" + j] ).getDataAsString()
       sheet.getRange("C"+n).setValue(e.parameter["p" + j]);
@@ -65,8 +83,17 @@ function doGet(e)
   }
 
   if (isSearch == 0) {
-    return ContentService.createTextOutput("Send to Log: Failed. There are no messages to log.");
+    // response
+    let resp = {};
+    resp.success = 1;
+    resp.desc = 'Failed. There are no messages to log.';
+
+    return ContentService.createTextOutput(JSON.stringify(resp));
   }
 
-  return ContentService.createTextOutput("Send to Log: Success");
+  // response
+  let resp = {};
+  resp.success = 1;
+
+  return ContentService.createTextOutput(JSON.stringify(resp));
 }
