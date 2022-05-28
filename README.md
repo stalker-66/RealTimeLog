@@ -85,6 +85,8 @@ local realtimelog = require "plugin.realtimelog"
 > ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/765803458b09547daceb45a6a604536e399687e3/Docs/res/18.png?raw=true)
 > **You Spreadsheet:** <br/>
 > ![Make a copy](https://github.com/stalker-66/RealTimeLog/blob/765803458b09547daceb45a6a604536e399687e3/Docs/res/19.png?raw=true)
+>
+> * The plugin is compatible with [CatchErrors](https://github.com/stalker-66/CatchErrors).
 ## Extras
 > The ***print*** function now supports output lua tables. <br/>
 > `Example:` <br/>
