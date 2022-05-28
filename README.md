@@ -35,7 +35,7 @@ local realtimelog = require "plugin.realtimelog"
 > ```
 > The ***params*** table includes parameters for **realtimelog** initialization. <br/>
 > * **deploymentID** (required) <br/>
-> `String`. Your Deployment ID. See more - [How to get Deployment ID](https://github.com/stalker-66/RealTimeLog/blob/87fbaddbe90e5688e710bcd2040e7bfd80627f17/Docs/How%20to%20get%20Deployment%20ID.md). <br/>
+> `String`. Your Deployment ID. See more - [How to get Deployment ID](https://github.com/stalker-66/RealTimeLog/blob/f745d1ca6f2c794555643251a12c875de8358b96/Docs/How%20to%20get%20Deployment%20ID.md). <br/>
 > * **userID** (optional) <br/>
 > `String`. User ID for logging. Default is `Device ID` - ***system.getInfo( "deviceID" )*** - [Solar2D API](https://docs.coronalabs.com/api/library/system/getInfo.html). <br/>
 > * **timeUpdate** (optional) <br/>
