@@ -56,7 +56,7 @@ private.update = function()
 
 				local date = def_date
 				if string_find(msg, "@date=") then
-					date = string_match(msg,"@date=(.+)@")
+					date = string_match(msg,"@date=(.-)@")
 					msg = string_gsub(msg,"@date="..date.."@","")
 				end
 
