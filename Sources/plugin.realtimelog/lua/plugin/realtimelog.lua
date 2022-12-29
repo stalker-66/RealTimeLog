@@ -43,48 +43,47 @@ private.update = function()
 		private.order = false
 
 		local def_date = os_date("%x").." "..os_date("%X")
-		local message = ""
+		local messageList = {}
 		local index = 0
-		for i=1,10 do
+		for i=1,500 do
 			local msg = private.list[i]
 			if msg then
+				local msgDate = def_date
 				local msgType = "Info"
-				if string_find(msg, "@type=") then
-					msgType = string_match(msg,"@type=(%w+)@")
-					msg = string_gsub(msg,"@type="..msgType.."@","")
+				local msgText = msg
+
+				if string_find(msgText, "@type=") then
+					msgType = string_match(msgText,"@type=(%w+)@")
+					msgText = string_gsub(msgText,"@type="..msgType.."@","")
 				end
 
-				local date = def_date
-				if string_find(msg, "@date=") then
-					date = string_match(msg,"@date=(.-)@")
-					msg = string_gsub(msg,"@date="..date.."@","")
+				
+				if string_find(msgText, "@date=") then
+					msgDate = string_match(msgText,"@date=(.-)@")
+					msgText = string_gsub(msgText,"@date="..msgDate.."@","")
 				end
 
-				if i==1 then
-					message = "?p"..index.."="..mime_b64(msg)
-				else
-					message = message.."&p"..index.."="..mime_b64(msg)
-				end
-
-				msgType = private.typeList[msgType] and private.typeList[msgType] or 0
-				message = message.."&t"..index.."="..msgType
-
-				message = message.."&d"..index.."="..mime_b64(date)
+				messageList[#messageList+1] = {
+					msgDate = msgDate,
+					msgType = private.typeList[msgType] and private.typeList[msgType] or 0,
+					msgText = mime_b64(msgText)
+				}
 
 				index = index+1
 			end
 		end
 
-		local url = private.url..message.."&userId="..mime_b64(private.userId).."&platform="..mime_b64(private.platform)
-		url = string_gsub(url,"+", "%%2B")
-		if private.debug then
-			_print( "RealTimeLog: Send Message:", url )
-		end
-		network.request( url, "GET", function(e)
-			-- if private.debug then
-			-- 	_print( "RealTimeLog: Response - ", json_prettify(e) )
-			-- end
-			if e.isError then
+		local bodyList = {
+			userId = private.userId,
+			platform = private.platform,
+			messages = json_encode(messageList),
+		}
+		local body = private.tableToStr(bodyList)
+		local request = network.request(private.url, "POST", function(e)
+			if private.debug then
+				_print( "RealTimeLog: Response - ", json_prettify(e) )
+			end
+			if e.isError or e.status~=200 then
 				if private.debug then
 					_print( "RealTimeLog: Log sending error. There is no internet connection or the server is unavailable.", json_prettify(e) )
 				end
@@ -100,20 +99,30 @@ private.update = function()
 				end
 			end
 			private.order = true
-		end)
+		end, {
+			headers = {
+				["Content-Type"] = "application/x-www-form-urlencoded",
+			},
+			body = body,
+		})
 	end
 end
 
 private.save = function()
 	if not private.init then return false end
+	local delta = os_time()-private.oldSaveTime
+	
+	if delta>1 then
+		private.oldSaveTime = os_time()
+		
+		local path = system.pathForFile( "realtimelog"..private.userId, system.DocumentsDirectory )
+		local file, errorString = io.open( path, "w" )
 
-	local path = system.pathForFile( "realtimelog"..private.userId, system.DocumentsDirectory )
-	local file, errorString = io.open( path, "w" )
-
-	if not file then
-	else
-		file:write( json_encode( private.list ) )
-		io.close( file )
+		if not file then
+		else
+			file:write( json_encode( private.list ) )
+			io.close( file )
+		end
 	end
 end
 
@@ -151,6 +160,18 @@ private.parsePrint = function(...)
 	return str
 end
 
+private.tableToStr = function(params)
+	local res,sp = "","&"
+	for k,v in pairs(params) do
+		if type(v) == "boolean" then
+			v = v and "true" or "false"
+		end
+		res = res .. sp .. k .. "=" .. v
+	end
+	res = res:gsub("+", "%%2B")	
+	return res
+end
+
 -- public
 public.init = function(p)
 	if private.init then return false end
@@ -174,6 +195,7 @@ public.init = function(p)
 	private.debug = p.debug
 	private.offlineLog = p.offlineLog
 	private.platform = system.getInfo("platform").." "..system.getInfo("platformVersion")
+	private.oldSaveTime = os_time()
 	private.init = true
 
 	if p.clearOldSession then
@@ -234,13 +256,18 @@ public.clear = function()
 
 	private.order = false
 	private.list = {}
-	network.request( private.url.."?isClear=1", "GET", function(e)
-		-- if private.debug then
-		-- 	_print( "RealTimeLog: Response - ", json_prettify(e) )
-		-- end
+
+	local bodyList = {
+		isClear = true
+	}
+	local body = private.tableToStr(bodyList)
+	local request = network.request(private.url, "POST", function(e)
+		if private.debug then
+			_print( "RealTimeLog: Response - ", json_prettify(e) )
+		end
 		if e.isError or e.status~=200 then
 			if private.debug then
-				_print( "RealTimeLog: Log cleanup error. There is no internet connection or the server is unavailable." )
+				_print( "RealTimeLog: Log cleanup error. There is no internet connection or the server is unavailable.", json_prettify(e) )
 			end
 		else
 			if private.debug then
@@ -248,7 +275,12 @@ public.clear = function()
 			end
 		end
 		private.order = true
-	end)
+	end, {
+		headers = {
+			["Content-Type"] = "application/x-www-form-urlencoded",
+		},
+		body = body,
+	})
 end
 
 public.stop = function()
@@ -264,6 +296,7 @@ public.stop = function()
 	private.debug = nil
 	private.offlineLog = nil
 	private.platform = nil
+	private.oldSaveTime = nil
 	private.list = {}
 end
 
