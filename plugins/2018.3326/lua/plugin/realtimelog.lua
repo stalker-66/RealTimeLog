@@ -17,8 +17,10 @@ local string_find = string.find
 local string_match = string.match
 local string_gsub = string.gsub
 local string_len = string.len
+local string_sub = string.sub
 local string_format = string.format
 local math_random = math.random
+local math_floor = math.floor
 local os_time = os.time
 local os_date = os.date
 local _print = print
@@ -53,7 +55,7 @@ private.update = function()
 				local msgText = msg
 
 				if string_find(msgText, "@type=") then
-					msgType = string_match(msgText,"@type=(%w+)@")
+					msgType = string_match(msgText,"@type=(.-)@")
 					msgText = string_gsub(msgText,"@type="..msgType.."@","")
 				end
 
@@ -210,8 +212,26 @@ public.init = function(p)
 		if not private.init then return false end
 
 		if string_len(str)>0 then
-			local date = os_date("%x").." "..os_date("%X")
-			private.list[#private.list+1] = "@date="..date.."@"..str
+			local msgDate = "@date="..os_date("%x").." "..os_date("%X").."@"
+			local content = msgDate..str
+
+			-- split text message into chunks
+			local length = string_len(content)
+			local maxLength = 40000
+			if length>maxLength then
+				local pos = 1
+				local parts = math_floor(length/maxLength)
+				local msgType = string_find(content, "@type=") and "@type="..string_match(content,"@type=(.-)@").."@" or ""
+				for i=1,parts do
+					local idx = maxLength*i
+					local msgPart = string_sub(content,pos,idx)
+					private.list[#private.list+1] = i==1 and msgPart or msgDate..msgType..msgPart
+					pos = idx+1
+				end
+				private.list[#private.list+1] = msgDate..msgType..string_sub(content,pos,length)
+			else
+				private.list[#private.list+1] = content
+			end
 		end
 
 		if private.offlineLog then
